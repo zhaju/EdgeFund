@@ -76,6 +76,7 @@ Now, we want to reward stocks with both high risk and high reward. After taking 
 $$
 \sigma(\beta (x_i, r_M))\cdot x_i
 $$
+
 where
 - $x_i$ = average expected rate of return on a security $x$
 - $r_M$ = average expected rate of return on the market
@@ -83,11 +84,7 @@ where
 NOTE: there are some stocks with negative percent returns. We are fine with keeping them negative, as we want to beat the market and would thus never want to invest in stocks with negative returns. Those stocks would have a negative product, and fall to the bottom of our rankings.
 
 ## 5. Calculating Weights
-Given the top $n$ stocks, we calculate how much each one should be weighted in our portfolio while abiding by the bounds of
-
-$$
-[\frac{100}{2n}\%, 15\%]
-$$
+Given the top $n$ stocks, we calculate how much each one should be weighted in our portfolio while abiding by the bounds of $\frac{100}{2n}$ to $15\%$
 
 We calculate weights by summing our weighted scores, then taking the weighted average of each stock in proportion to the total. This ensures that stocks with high reward and high return are rewarded, while stocks with low risk and low return are penalized.
 
