@@ -17,7 +17,7 @@ We start by looping through the CSV file to remove tickers which do not meet the
 - Have an average monthly volume of <100,000 shares from ``10-01-2023`` to ``09-30-2024``
 - For the average monthly volume calculation, drop any month with <18 trading days
 
-## 2. # 2. Calculating Betas
+## 2. Calculating Betas
 Beta is a measure of how correlated the value of one security is with the market. We calculate the betas of each stock in our list to determine the relation of their performace with the performance of the market (in this case, the average of the S&P500 and TSX60). Our intention is to select stocks with low correlation to the market, so we can beat the market instead of meeting it. Beta is calculated with the following formulas, where $X$ and $Y$ represent two securities:
 ### Standard Deviation
 $$
@@ -43,6 +43,7 @@ $$
 \beta=\frac{COV(x_i,r_M)}{\sigma^2(r_M)}
 \end{align*}
 $$
+
 where:
 - $COV$ = covariance
 - $\sigma$ = variance
@@ -58,17 +59,20 @@ $$
 E(X)=\overline{X}=\frac{\sum x_i}{N}
 \end{align*}
 $$
+
 where 
 - $x_i$ are individual returns of some security $X$
 - $N$ is the total number of observations (time periods for us)
 
 ## 4. Filtering by Beta and ER
 Now that we have our stocks ranked by both risk and reward, we must determine which ones we want for our portfolio. To do this, we first need to normalize our beta values so they're bounded by $[0,1]$ just like our percent returns. To do this, we'll use a sigmoid (or logistic) function, which is commonly used in statistics and machine learning as an activation function. The sigmoid function takes any real number value and scales it so it's between 0 and 1. The sigmoid function on some value $x$ is represented by $\sigma(x)$, and is defined as follows:
+
 $$
 \sigma(x)=\frac{1}{1+e^{-x}}
 $$
 
 Now, we want to reward stocks with both high risk and high reward. After taking the normalized beta values, we then define a constant that is the product of beta and percent returns. We then rank our list of tickers based on which ones have the highest value of
+
 $$
 \sigma(\beta (x_i, r_M))\cdot x_i
 $$
@@ -80,9 +84,11 @@ NOTE: there are some stocks with negative percent returns. We are fine with keep
 
 ## 5. Calculating Weights
 Given the top $n$ stocks, we calculate how much each one should be weighted in our portfolio while abiding by the bounds of
+
 $$
 [\frac{100}{2n}\%, 15\%]
 $$
+
 We calculate weights by summing our weighted scores, then taking the weighted average of each stock in proportion to the total. This ensures that stocks with high reward and high return are rewarded, while stocks with low risk and low return are penalized.
 
 ## 6. Running Simluations
